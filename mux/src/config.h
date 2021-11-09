@@ -30,7 +30,9 @@
 #define WINDOWS_CRYPT
 #define WINDOWS_TIME
 #define WINDOWS_THREADS
+#ifndef __GNUC__
 #define WINDOWS_INSTRINSICS
+#endif
 //#define WINDOWS_SSL
 
 #if (_MSC_VER >= 1400)
@@ -40,7 +42,9 @@
 
 // Targeting Windows 2000 or later.
 //
+#ifndef __GNUC__
 #define _WIN32_WINNT 0x0500
+#endif
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <winsock2.h>
@@ -72,7 +76,12 @@
 
 #endif // WIN32
 
-#ifndef __specstrings
+#if (__GNUC__>=7)
+#define register
+#endif
+
+//#ifndef __specstrings
+#if ((__GNUC__) || (not defined __specstrings))
 #define __deref_in
 #define __deref_in_opt
 #define __deref_in_ecount(n)
@@ -80,12 +89,16 @@
 #define __deref_out
 #define __in
 #define __in_z
+#ifndef __in_ecount
 #define __in_ecount(n)
+#endif
 #define __in_opt
 #define __inout
 #define __inout_ecount_full(n)
 #define __out
+#ifndef __out_ecount
 #define __out_ecount(n)
+#endif
 #define __out_opt
 #elif defined(WIN64)
 //#define __in_z
@@ -391,15 +404,25 @@ typedef char  boolexp_type;
 
 #define DCL_CDECL  __cdecl
 #define DCL_EXPORT __declspec(dllexport)
-#define DCL_API    __stdcall
+//#define DCL_API    __stdcall
+#define DCL_API    DCL_CDECL
 
 typedef __int64          INT64;
 typedef unsigned __int64 UINT64;
 #ifndef INT64_C
+#ifdef _MSC_VER
 #define INT64_C(c)       (c ## i64)
+#else
+#define INT64_C(c)      (c ## LL)
+#endif
 #endif // INT64_C
 #ifndef UINT64_C
+#ifdef _MSC_VER
 #define UINT64_C(c)      (c ## ui64)
+#else
+//GCC
+#define UINT64_C(c)      (c ## ULL)
+#endif
 #endif // UINT64_C
 
 #define LOCALTIME_TIME_T_MIN_VALUE 0
@@ -416,6 +439,9 @@ typedef unsigned __int64 UINT64;
 // 1200 is Visual C++ 6.0 (1998)
 #define MUX_ULONG_PTR DWORD
 #define MUX_PULONG_PTR LPDWORD
+#elif (__GNUC__>=5)
+#define MUX_ULONG_PTR ULONG_PTR
+#define MUX_PULONG_PTR PULONG_PTR
 #else
 #error TinyMUX Requires at least version 6.0 of Visual C++.
 #endif

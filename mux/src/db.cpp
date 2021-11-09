@@ -4015,8 +4015,8 @@ int ReplaceFile(UTF8 *old_name, UTF8 *new_name)
         return -1;
     }
 
-    DeleteFile(pNewName);
-    if (MoveFile(pOldName, pNewName))
+    DeleteFileW(pNewName);
+    if (MoveFileW(pOldName, pNewName))
     {
         MEMFREE(pNewName);
         return 0;
@@ -4036,7 +4036,7 @@ void RemoveFile(UTF8 *name)
     UTF16 *pFileToDelete = ConvertFromUTF8ToUTF16(name, &nNewName);
     if (nullptr != pFileToDelete)
     {
-        DeleteFile(pFileToDelete);
+        DeleteFileW(pFileToDelete);
     }
 }
 

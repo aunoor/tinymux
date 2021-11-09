@@ -1283,7 +1283,7 @@ static DWORD WINAPI ListenForCloseProc(LPVOID lpParameter)
 {
     UNUSED_PARAMETER(lpParameter);
 
-    WNDCLASS wc;
+    WNDCLASSW wc;
 
     wc.style         = CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc   = mux_WindowProc;
@@ -1296,9 +1296,9 @@ static DWORD WINAPI ListenForCloseProc(LPVOID lpParameter)
     wc.lpszMenuName  = nullptr;
     wc.lpszClassName = szApp;
 
-    RegisterClass(&wc);
+    RegisterClassW(&wc);
 
-    g_hWnd = CreateWindow(szApp, szApp, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
+    g_hWnd = CreateWindowW(szApp, szApp, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
         CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, nullptr, nullptr, 0, nullptr);
 
     ShowWindow(g_hWnd, SW_HIDE);

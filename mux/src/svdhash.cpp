@@ -1483,7 +1483,7 @@ bool CHashFile::CreateFileSet(const UTF8 *szDirFile, const UTF8 *szPageFile)
         return false;
     }
 
-    m_hPageFile = CreateFile(pFilename, GENERIC_READ | GENERIC_WRITE,
+    m_hPageFile = CreateFileW(pFilename, GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ, 0, CREATE_ALWAYS,
         FILE_ATTRIBUTE_NORMAL + FILE_FLAG_RANDOM_ACCESS, nullptr);
     bSuccess = (INVALID_HANDLE_VALUE != m_hPageFile);
@@ -1503,7 +1503,7 @@ bool CHashFile::CreateFileSet(const UTF8 *szDirFile, const UTF8 *szPageFile)
         return false;
     }
 
-    m_hDirFile = CreateFile(pFilename, GENERIC_READ | GENERIC_WRITE,
+    m_hDirFile = CreateFileW(pFilename, GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ, 0, CREATE_ALWAYS,
         FILE_ATTRIBUTE_NORMAL + FILE_FLAG_SEQUENTIAL_SCAN, nullptr);
     bSuccess = (INVALID_HANDLE_VALUE != m_hDirFile);
@@ -1687,7 +1687,7 @@ int CHashFile::Open(const UTF8 *szDirFile, const UTF8 *szPageFile, int nCachePag
         return HF_OPEN_STATUS_ERROR;
     }
 
-    m_hPageFile = CreateFile(pFilename, GENERIC_READ | GENERIC_WRITE,
+    m_hPageFile = CreateFileW(pFilename, GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ, 0, OPEN_EXISTING,
         FILE_ATTRIBUTE_NORMAL + FILE_FLAG_RANDOM_ACCESS, nullptr);
     bSuccess = (INVALID_HANDLE_VALUE != m_hPageFile);
@@ -1753,7 +1753,7 @@ int CHashFile::Open(const UTF8 *szDirFile, const UTF8 *szPageFile, int nCachePag
         return HF_OPEN_STATUS_ERROR;
     }
 
-    m_hDirFile = CreateFile(pFilename, GENERIC_READ | GENERIC_WRITE,
+    m_hDirFile = CreateFileW(pFilename, GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ, 0, OPEN_EXISTING,
         FILE_ATTRIBUTE_NORMAL + FILE_FLAG_SEQUENTIAL_SCAN, nullptr);
     bSuccess = (INVALID_HANDLE_VALUE != m_hDirFile);
@@ -1765,7 +1765,7 @@ int CHashFile::Open(const UTF8 *szDirFile, const UTF8 *szPageFile, int nCachePag
         // The Directory doesn't exist, so we create it anew, and rebuild the
         // index.
 #if defined(WINDOWS_FILES)
-        m_hDirFile = CreateFile(pFilename, GENERIC_READ | GENERIC_WRITE,
+        m_hDirFile = CreateFileW(pFilename, GENERIC_READ | GENERIC_WRITE,
             FILE_SHARE_READ, 0, CREATE_ALWAYS,
             FILE_ATTRIBUTE_NORMAL + FILE_FLAG_SEQUENTIAL_SCAN, nullptr);
         bSuccess = (INVALID_HANDLE_VALUE != m_hDirFile);

@@ -464,7 +464,7 @@ bool CLogFile::CreateLogFile(void)
         return false;
     }
 
-    m_hFile = CreateFile(pFilename, GENERIC_READ | GENERIC_WRITE,
+    m_hFile = CreateFileW(pFilename, GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ, 0, CREATE_ALWAYS,
         FILE_ATTRIBUTE_NORMAL + FILE_FLAG_SEQUENTIAL_SCAN, nullptr);
     bSuccess = (INVALID_HANDLE_VALUE != m_hFile);
@@ -488,7 +488,7 @@ void CLogFile::AppendLogFile(void)
         return;
     }
 
-    m_hFile = CreateFile(pFilename, GENERIC_READ | GENERIC_WRITE,
+    m_hFile = CreateFileW(pFilename, GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ, 0, OPEN_ALWAYS,
         FILE_ATTRIBUTE_NORMAL + FILE_FLAG_SEQUENTIAL_SCAN, nullptr);
     bSuccess = (INVALID_HANDLE_VALUE != m_hFile);

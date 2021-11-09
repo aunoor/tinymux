@@ -2583,7 +2583,7 @@ void DetectWindowsCapabilities()
 {
     // Get a handle to ws2_32.dll
     //
-    HINSTANCE hInstWs2_32 = LoadLibrary(L"ws2_32");
+    HINSTANCE hInstWs2_32 = LoadLibraryW(L"ws2_32");
     if (nullptr != hInstWs2_32)
     {
         fpGetNameInfo = (FGETNAMEINFO *)GetProcAddress(hInstWs2_32, "getnameinfo");
@@ -2608,7 +2608,7 @@ void DetectWindowsCapabilities()
     {
         // Get a handle to wship6.dll (part of the Windows 2000 IPv6 technology preview).
         //
-        HINSTANCE hInstWship6 = LoadLibrary(L"wship6");
+        HINSTANCE hInstWship6 = LoadLibraryW(L"wship6");
         if (nullptr != hInstWship6)
         {
             fpGetNameInfo = (FGETNAMEINFO *)GetProcAddress(hInstWship6, "getnameinfo");

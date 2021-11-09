@@ -24,7 +24,7 @@ extern "C"
 
 #if defined(WINDOWS_DYNALIB)
 typedef HINSTANCE MODULE_HANDLE;
-#define MOD_OPEN(m)  LoadLibrary(m)
+#define MOD_OPEN(m)  LoadLibraryW(m)
 #define MOD_SYM(h,s) GetProcAddress(h,s)
 #define MOD_CLOSE(h) FreeLibrary(h)
 #elif defined(UNIX_DYNALIB)
@@ -323,6 +323,7 @@ static void ModuleLoad(Module *pModule)
     }
 
     pModule->hInst = MOD_OPEN(pModule->pFileName);
+    //pModule->hInst = LoadLibraryA(".\\bin\\libfuncs.dll");
     if (nullptr != pModule->hInst)
     {
         pModule->fpGetClassObject = (FPGETCLASSOBJECT *)MOD_SYM(pModule->hInst, "mux_GetClassObject");
@@ -350,6 +351,9 @@ static void ModuleLoad(Module *pModule)
     else
     {
         pModule->eState = eModuleUnloadable;
+        auto loadErr = GetLastError();
+        printf("%x",loadErr);
+        if (loadErr == 0) {}
     }
 }
 
